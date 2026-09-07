@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ensemble-paper-audit:external-obligations:v1",
+  "title": "External mathematical verification obligations",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "obligations", "coverage_notes"],
+  "properties": {
+    "schema_version": {"const": "ensemble-paper-audit.external-obligations.v1"},
+    "obligations": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/obligation"}
+    },
+    "coverage_notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reviewed_regions", "known_omissions"],
+      "properties": {
+        "reviewed_regions": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "known_omissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["coverage_id", "reason"],
+            "properties": {
+              "coverage_id": {
+                "type": ["string", "null"],
+                "pattern": "^(global|decomposed|argument-spine|refuter):[1-9][0-9]*$"
+              },
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "obligation_id",
+        "kind",
+        "location",
+        "paper_statement",
+        "required_for_use",
+        "use_site",
+        "centrality",
+        "citation_keys",
+        "bibliography_entries",
+        "verification_targets",
+        "safe_search_terms",
+        "reason_unverified_blind",
+        "coverage_ids",
+        "reported_by",
+        "confidence"
+      ],
+      "properties": {
+        "obligation_id": {"type": "string", "pattern": "^O[1-9][0-9]*$"},
+        "kind": {
+          "enum": [
+            "cited_result",
+            "uncited_well_known_claim",
+            "imported_definition",
+            "external_computation",
+            "other_external_input"
+          ]
+        },
+        "location": {"$ref": "urn:moonshot:schemas:common:v1#/$defs/location"},
+        "paper_statement": {"type": "string", "minLength": 1},
+        "required_for_use": {"type": "string", "minLength": 1},
+        "use_site": {"$ref": "urn:moonshot:schemas:common:v1#/$defs/location"},
+        "centrality": {
+          "enum": ["central_claim", "required_dependency", "noncentral", "unknown"]
+        },
+        "citation_keys": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "bibliography_entries": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "verification_targets": {
+          "type": "array",
+          "minItems": 6,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "exact_statement",
+              "hypotheses",
+              "parameters_and_ranges",
+              "normalization",
+              "quantifier_order",
+              "logical_sufficiency"
+            ]
+          }
+        },
+        "safe_search_terms": {
+          "type": "array",
+          "description": "Suggested non-identifying starting points for source searches, not an exhaustive allowed vocabulary. Synonyms and relevant source-search refinements are permitted.",
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "reason_unverified_blind": {"type": "string", "minLength": 1},
+        "coverage_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(global|decomposed|argument-spine|refuter):[1-9][0-9]*$"
+          }
+        },
+        "reported_by": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["inventory", "global", "decomposed", "argument_spine", "refuter"]
+          }
+        },
+        "confidence": {"$ref": "urn:moonshot:schemas:common:v1#/$defs/confidence"}
+      }
+    }
+  }
+}

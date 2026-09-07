@@ -1,0 +1,4 @@
+interface:
+  display_name: "Math Verifier v.1.0"
+  short_description: "Structured verification for mathematical papers"
+  default_prompt: "Use $math-paper-verifier to verify this mathematical paper."

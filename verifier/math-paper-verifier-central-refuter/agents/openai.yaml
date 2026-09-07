@@ -1,0 +1,4 @@
+interface:
+  display_name: "Math Verifier v.1.0 — Central Refuter"
+  short_description: "Search for counterexamples to central paper claims"
+  default_prompt: "Use $math-paper-verifier-central-refuter to search for counterexamples to this paper's central claims, without running a full review."

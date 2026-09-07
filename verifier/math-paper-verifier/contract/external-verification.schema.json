@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ensemble-paper-audit:external-verification:v1",
+  "title": "Independent-source verification results",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "resolutions", "coverage_notes"],
+  "properties": {
+    "schema_version": {"const": "ensemble-paper-audit.external-verification.v1"},
+    "resolutions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/resolution"}
+    },
+    "coverage_notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resolved_obligation_ids", "unresolved_obligation_ids", "excluded_sources"],
+      "properties": {
+        "resolved_obligation_ids": {
+          "type": "array",
+          "description": "Obligations with a verified or source_mismatch verdict and no unresolved checks. Disjoint from unresolved_obligation_ids.",
+          "items": {"type": "string", "pattern": "^O[1-9][0-9]*$"},
+          "uniqueItems": true
+        },
+        "unresolved_obligation_ids": {
+          "type": "array",
+          "description": "Obligations with any unresolved checks, including source_mismatch results that establish one failure while leaving other questions open.",
+          "items": {"type": "string", "pattern": "^O[1-9][0-9]*$"},
+          "uniqueItems": true
+        },
+        "excluded_sources": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "obligation_id",
+        "status",
+        "rationale",
+        "sources",
+        "checks",
+        "unresolved_checks",
+        "finding_ids"
+      ],
+      "properties": {
+        "obligation_id": {"type": "string", "pattern": "^O[1-9][0-9]*$"},
+        "status": {"enum": ["verified", "source_mismatch", "not_found", "undecidable"]},
+        "rationale": {"type": "string", "minLength": 1},
+        "sources": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/source"}
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/check"}
+        },
+        "unresolved_checks": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "finding_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^F[1-9][0-9]*$"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id",
+        "url",
+        "title",
+        "source_type",
+        "relationship_to_manuscript",
+        "used",
+        "selection_rationale",
+        "statement_location",
+        "statement_summary"
+      ],
+      "properties": {
+        "source_id": {"type": "string", "pattern": "^S[1-9][0-9]*$"},
+        "url": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "source_type": {
+          "enum": [
+            "publisher_primary",
+            "arxiv_primary",
+            "author_copy_primary",
+            "monograph",
+            "official_reference",
+            "secondary_locator",
+            "other"
+          ]
+        },
+        "relationship_to_manuscript": {
+          "enum": ["independent", "same_manuscript", "derivative", "cites_manuscript", "unknown"]
+        },
+        "used": {"type": "boolean"},
+        "selection_rationale": {"type": "string", "minLength": 1},
+        "statement_location": {"type": "string", "minLength": 1},
+        "statement_summary": {"type": "string", "minLength": 1}
+      }
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "status", "rationale"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "exact_statement",
+            "hypotheses",
+            "parameters_and_ranges",
+            "normalization",
+            "quantifier_order",
+            "logical_sufficiency"
+          ]
+        },
+        "status": {"enum": ["satisfied", "not_satisfied", "unresolved", "not_applicable"]},
+        "rationale": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

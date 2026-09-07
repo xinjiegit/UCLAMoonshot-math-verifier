@@ -1,0 +1,61 @@
+name: Publish skill release
+
+on:
+  push:
+    tags:
+      - 'v.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@v6
+
+      - name: Verify release version
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected="$(tr -d '\r\n' < verifier/math-paper-verifier/VERSION)"
+          if [ "$GITHUB_REF_NAME" != "$expected" ]; then
+            echo "Release tag $GITHUB_REF_NAME does not match skill version $expected." >&2
+            exit 1
+          fi
+
+      - name: Build skill-only archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          stage="$(mktemp -d)"
+          bundle="$stage/math-verifier"
+          mkdir -p "$bundle"
+          cp README.md LICENSE "$bundle/"
+          rsync -a \
+            --exclude '__pycache__' \
+            --exclude '*.pyc' \
+            --exclude 'tests/' \
+            verifier/ "$bundle/verifier/"
+          (
+            cd "$stage"
+            zip -qr "$GITHUB_WORKSPACE/math-verifier.zip" math-verifier
+          )
+          shasum -a 256 math-verifier.zip > math-verifier.zip.sha256
+
+      - name: Create or update GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" math-verifier.zip math-verifier.zip.sha256 --clobber
+          else
+            gh release create "$TAG" math-verifier.zip math-verifier.zip.sha256 \
+              --verify-tag \
+              --generate-notes \
+              --title "Math Verifier $TAG"
+          fi

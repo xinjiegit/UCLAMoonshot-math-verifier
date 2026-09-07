@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ensemble-paper-audit:argument-spine:v1",
+  "title": "Central Argument Spine Audit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "central_claims", "nodes", "edges", "coverage_notes"],
+  "properties": {
+    "schema_version": {"const": "ensemble-paper-audit.argument-spine.v1"},
+    "central_claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/central_claim"}
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/node"}
+    },
+    "edges": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/edge"}
+    },
+    "coverage_notes": {"$ref": "#/$defs/coverage_notes"}
+  },
+  "$defs": {
+    "central_claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "statement", "location", "root_node_id", "status", "rationale", "unresolved_checks"],
+      "properties": {
+        "claim_id": {"type": "string", "pattern": "^C[1-9][0-9]*$"},
+        "statement": {"type": "string", "minLength": 1},
+        "location": {"$ref": "urn:moonshot:schemas:common:v1#/$defs/location"},
+        "root_node_id": {"type": "string", "pattern": "^N[1-9][0-9]*$"},
+        "status": {"enum": ["established", "repairably_incomplete", "method_breakdown", "unresolved"]},
+        "rationale": {"type": "string", "minLength": 1},
+        "unresolved_checks": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node_id", "kind", "statement", "location", "role", "status", "audit"],
+      "properties": {
+        "node_id": {"type": "string", "pattern": "^N[1-9][0-9]*$"},
+        "kind": {
+          "enum": ["central_claim", "theorem", "lemma", "proposition", "definition", "estimate", "construction", "case_split", "external_input", "deduction", "other"]
+        },
+        "statement": {"type": "string", "minLength": 1},
+        "location": {"$ref": "urn:moonshot:schemas:common:v1#/$defs/location"},
+        "role": {"enum": ["central_claim", "required_dependency"]},
+        "status": {"enum": ["verified", "repairably_incomplete", "failed", "unresolved"]},
+        "audit": {"type": "string", "minLength": 1},
+        "finding_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^F[1-9][0-9]*$"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edge_id", "dependency_node_id", "consumer_node_id", "use", "invocation_location", "checks", "status", "audit"],
+      "properties": {
+        "edge_id": {"type": "string", "pattern": "^D[1-9][0-9]*$"},
+        "dependency_node_id": {"type": "string", "pattern": "^N[1-9][0-9]*$"},
+        "consumer_node_id": {"type": "string", "pattern": "^N[1-9][0-9]*$"},
+        "use": {"type": "string", "minLength": 1},
+        "invocation_location": {"$ref": "urn:moonshot:schemas:common:v1#/$defs/location"},
+        "checks": {
+          "type": "array",
+          "minItems": 7,
+          "items": {"$ref": "#/$defs/edge_check"}
+        },
+        "status": {"enum": ["verified", "repairably_incomplete", "failed", "unresolved"]},
+        "audit": {"type": "string", "minLength": 1},
+        "finding_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^F[1-9][0-9]*$"},
+          "uniqueItems": true
+        }
+      }
+    },
+    "edge_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "status", "rationale"],
+      "properties": {
+        "kind": {"enum": ["conclusion_match", "hypotheses", "parameters_and_ranges", "normalization", "quantifier_order", "variable_binding", "logical_sufficiency"]},
+        "status": {"enum": ["satisfied", "not_satisfied", "unresolved", "not_applicable"]},
+        "rationale": {"type": "string", "minLength": 1}
+      }
+    },
+    "coverage_notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["audited_claim_ids", "unresolved_claim_ids", "scope_exclusions"],
+      "properties": {
+        "audited_claim_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^C[1-9][0-9]*$"},
+          "uniqueItems": true
+        },
+        "unresolved_claim_ids": {
+          "type": "array",
+          "items": {"type": "string", "pattern": "^C[1-9][0-9]*$"},
+          "uniqueItems": true
+        },
+        "scope_exclusions": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}

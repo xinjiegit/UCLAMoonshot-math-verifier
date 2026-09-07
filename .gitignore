@@ -1,0 +1,11 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.private/
+.env
+.env.*
+.pnpm-store/
+node_modules/
+paper-audit-output/
+math-verifier.zip
+math-verifier.zip.sha256

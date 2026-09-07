@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Narrow web-disabled audit external coverage handoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "manuscript_id", "run_id", "sources"],
+  "properties": {
+    "schema_version": {"const": "ensemble-paper-audit.blind-external-coverage.v1"},
+    "manuscript_id": {"type": "string", "pattern": "^ms_[a-z0-9_]+$"},
+    "run_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]*$"},
+    "sources": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["pass", "output_sha256", "external_checks_not_performed"],
+        "properties": {
+          "pass": {"enum": ["global", "decomposed", "argument-spine", "refuter"]},
+          "output_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "external_checks_not_performed": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["coverage_id", "note"],
+              "properties": {
+                "coverage_id": {
+                  "type": "string",
+                  "pattern": "^(global|decomposed|argument-spine|refuter):[1-9][0-9]*$"
+                },
+                "note": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

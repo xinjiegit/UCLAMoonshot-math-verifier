@@ -1,0 +1,169 @@
+{
+  "registry_version": 1,
+  "protocol_version": "2026-08-21.1",
+  "description": "Provider-neutral workflow registry for the unified ensemble paper audit skill.",
+  "passes": {
+    "global": {
+      "kind": "mathematical",
+      "network": "disabled",
+      "protocol_version": "2026-08-21.1",
+      "generated_prompt_header": "ENSEMBLE_PAPER_AUDIT_PROTOCOL 2026-08-21.1 PASS global",
+      "adapters": {
+        "shared": {
+          "path": "references/global-pass.txt",
+          "selector": "global",
+          "sha256": "b702bbb0931ae5f9fd6a2276c37a44ae8976c3bed64f7c12bff30e51c505bc51"
+        }
+      }
+    },
+    "decomposed": {
+      "kind": "mathematical",
+      "network": "disabled",
+      "protocol_version": "2026-08-21.1",
+      "generated_prompt_header": "ENSEMBLE_PAPER_AUDIT_PROTOCOL 2026-08-21.1 PASS decomposed",
+      "adapters": {
+        "shared": {
+          "path": "references/decomposed-pass.txt",
+          "selector": "decomposed",
+          "sha256": "3fdb6364fb34f7dead905d1763bb2161e5ec4477b3973d8efe81c9f2c59b5457"
+        }
+      }
+    },
+    "refuter": {
+      "kind": "mathematical",
+      "network": "disabled",
+      "protocol_version": "2026-08-21.1",
+      "semantic_requirements": [
+        "smallest admissible",
+        "central_unsalvageable_error",
+        "dependency path",
+        "unresolved_checks",
+        "external_checks_not_performed"
+      ],
+      "generated_prompt_header": "ENSEMBLE_PAPER_AUDIT_PROTOCOL 2026-08-21.1 PASS refuter",
+      "adapters": {
+        "shared": {
+          "path": "references/refuter-pass.txt",
+          "selector": "refuter",
+          "sha256": "ce2720fe279a2a57ac570651975cbf69fb9a0ac1ef59ec3c3741a57f7f44f666"
+        }
+      }
+    },
+    "argument-spine": {
+      "kind": "mathematical",
+      "network": "disabled",
+      "protocol_version": "2026-08-21.1",
+      "generated_prompt_header": "ENSEMBLE_PAPER_AUDIT_PROTOCOL 2026-08-21.1 PASS argument-spine",
+      "adapters": {
+        "shared": {
+          "path": "references/argument-spine-pass.txt",
+          "selector": "argument-spine",
+          "sha256": "d248d143e2b235281e54d967e41b9b6daa30c59d40cca71aeb7e7bca037d447e"
+        }
+      }
+    },
+    "external-obligations": {
+      "kind": "source_inventory",
+      "network": "disabled",
+      "protocol_version": "2026-08-21.1",
+      "generated_prompt_header": "ENSEMBLE_PAPER_AUDIT_PROTOCOL 2026-08-21.1 PASS external-obligations",
+      "adapters": {
+        "shared": {
+          "path": "references/external-obligation-pass.txt",
+          "selector": "external-obligations",
+          "sha256": "ac213188b960cf1663ed4df774d2cf3de2f185c3f22f855be4ec21c0cca42915"
+        }
+      }
+    },
+    "external-verification": {
+      "kind": "source_verification",
+      "network": "required",
+      "protocol_version": "2026-08-21.1",
+      "generated_prompt_header": "ENSEMBLE_PAPER_AUDIT_PROTOCOL 2026-08-21.1 PASS external-verification",
+      "adapters": {
+        "shared": {
+          "path": "references/external-verification-pass.txt",
+          "selector": "external-verification",
+          "sha256": "edf034237bd663e37088e6683becfda501e93ddd6646db525afada351f70cd2f"
+        }
+      }
+    },
+    "focused-sweep": {
+      "kind": "targeted_mathematical",
+      "network": "disabled",
+      "protocol_version": "2026-08-21.1",
+      "generated_prompt_header": "ENSEMBLE_PAPER_AUDIT_PROTOCOL 2026-08-21.1 PASS focused-sweep",
+      "adapters": {
+        "shared": {
+          "path": "references/focused-sweep.txt",
+          "selector": "focused-sweep",
+          "sha256": "e0330276060a1dda09cd3ef014843b2a4169fc851433389400d071bdd49b26a2"
+        }
+      }
+    },
+    "citation-fidelity": {
+      "kind": "targeted_source_verification",
+      "network": "required",
+      "protocol_version": "2026-08-21.1",
+      "generated_prompt_header": "ENSEMBLE_PAPER_AUDIT_PROTOCOL 2026-08-21.1 PASS citation-fidelity",
+      "adapters": {
+        "shared": {
+          "path": "references/citation-pass.txt",
+          "selector": "citation",
+          "sha256": "a776d83e6b41294de86d9e29321d4623efc88610bb4208081f906f34469abdf8"
+        }
+      }
+    }
+  },
+  "pass_aliases": {
+    "display-equation": {
+      "target_pass": "focused-sweep",
+      "focus_specification": "Displayed equations: enumerate and independently re-derive every display in scope; check constants, factors, signs, exponents, indices, ranges, domains, and normalizations.",
+      "selectors": {
+        "shared": "display-sweep"
+      }
+    },
+    "boundary-clause": {
+      "target_pass": "focused-sweep",
+      "focus_specification": "Boundary clauses: check quantifier ranges, endpoints, empty, singleton, and degenerate cases, base cases, exceptions, omitted hypotheses, and every clause required of constructed structures.",
+      "selectors": {
+        "shared": "boundary-clause-sweep"
+      }
+    }
+  },
+  "profiles": {
+    "standard": {
+      "profile_kind": "manuscript",
+      "required_mathematical_passes": [
+        "global",
+        "decomposed"
+      ],
+      "required_blind_passes": [
+        "global",
+        "decomposed",
+        "external-obligations"
+      ],
+      "required_web_passes": [
+        "external-verification"
+      ],
+      "primary_scoring_passes": []
+    },
+    "targeted_focused_sweep": {
+      "profile_kind": "targeted",
+      "required_blind_passes": [
+        "focused-sweep"
+      ],
+      "required_web_passes": [],
+      "primary_scoring_passes": []
+    },
+    "targeted_citation_fidelity": {
+      "profile_kind": "targeted",
+      "required_blind_passes": [],
+      "required_web_passes": [
+        "citation-fidelity"
+      ],
+      "primary_scoring_passes": []
+    }
+  },
+  "runtime": "shared"
+}

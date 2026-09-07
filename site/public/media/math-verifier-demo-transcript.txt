@@ -1,0 +1,9 @@
+UCLA Moonshot Math Verifier helps you check mathematical papers. It comes as a skill called math-paper-verifier, which works with Codex and Claude Code. Here, I paste the repository link into Codex and ask it to install the skill. Codex downloads the files, checks the setup, and runs the install command. Once it's ready, I open a new task to try it out.
+
+For this demo, I'm using A Bound on Partitioning Clusters, by Daniel Kane and Terence Tao. I've saved the PDF in a local folder. I select the Math Verifier skill and ask it to check the file and give me a findings report. You can also use LaTeX, Markdown, or plain text. Your paper doesn't need to be online.
+
+The skill checks the paper in several ways. One AI worker reads the whole paper, while others check smaller parts in detail. A separate worker checks references and results from outside sources. The findings are then combined into one report. A full review takes time. For this demo, let's look at the report and one of its findings.
+
+The report gives an overall result, then lists possible problems and where to find them. Let's look at the first one, in Remark six on page eight. This step in the proof needs a curve that keeps bending upward, like the one on the left. But the curve in this example bends downward instead. So this step needs another argument. That doesn't mean the paper's main results are wrong. I can read the explanation and suggested repair, then compare them with the original passage in the paper.
+
+These findings still need a mathematician's judgment. And if the review finds no problems, that doesn't prove the paper is correct. You can also start with the paper's web link, focus on one part, or look for examples that would disprove the main claims. Visit the UCLA Moonshot Math Verifier website for the setup guide and download.

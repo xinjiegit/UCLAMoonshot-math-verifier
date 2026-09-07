@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ensemble-paper-audit:citation-fetch-log:v2",
+  "title": "External verification query and fetch provenance log",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "kind",
+      "obligation_id",
+      "query",
+      "url",
+      "used",
+      "relationship_to_manuscript",
+      "reason"
+    ],
+    "properties": {
+      "kind": {"enum": ["search", "fetch"]},
+      "obligation_id": {"type": "string", "pattern": "^O[1-9][0-9]*$", "description": "Obligation motivating this retrieval. The same source may be used by other obligations, as recorded in external-verification.json; do not invent additional fetches for reuse."},
+      "query": {"type": ["string", "null"]},
+      "url": {"type": ["string", "null"]},
+      "used": {"type": "boolean", "description": "For a fetch, whether this retrieved source is used in any resolution."},
+      "relationship_to_manuscript": {
+        "enum": ["independent", "same_manuscript", "derivative", "cites_manuscript", "unknown"]
+      },
+      "reason": {"type": "string", "minLength": 1}
+    },
+    "allOf": [
+      {
+        "if": {"properties": {"kind": {"const": "search"}}},
+        "then": {
+          "properties": {
+            "query": {"type": "string", "minLength": 1},
+            "url": {"const": null},
+            "used": {"const": false},
+            "relationship_to_manuscript": {"const": "unknown"}
+          }
+        }
+      },
+      {
+        "if": {"properties": {"kind": {"const": "fetch"}}},
+        "then": {
+          "properties": {
+            "query": {"const": null},
+            "url": {"type": "string", "pattern": "^https?://"}
+          }
+        }
+      }
+    ]
+  }
+}

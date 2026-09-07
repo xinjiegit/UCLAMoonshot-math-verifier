@@ -1,0 +1,4 @@
+interface:
+  display_name: "Math Verifier v.1.0 — Focused Check"
+  short_description: "Check a mathematical aspect of the paper you specify"
+  default_prompt: "Use $math-paper-verifier-focused to check the mathematical aspect and scope I specify, without running a full review."
