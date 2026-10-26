@@ -174,16 +174,24 @@ not that the theorem has been proved correct.
 
 ## Optional passes
 
+For central-refutation requests, follow `references/central-reconstruction.md`:
+run the original refuter and the original paired calculation reconstruction as
+independent components, then combine their reviewed results. The reconstruction
+uses a fresh planner, two independent derivations per selected target, and a
+fresh mathematical reviewer. It requires native fresh subagents and is not added
+to the standard full-paper workflow by default. An explicit counterexample-only
+request or raw `--pass refuter` invocation runs just the original refuter.
+
 Use fresh workers for requested `argument-spine`, `refuter`, `focused-sweep`
 (`--focus` supplies the axis), or `citation` passes. An explicit `only`
 request suppresses the standard workflow. Citation passes may use web access
 and must produce a fetch log. Never execute submitted build files, TeX shell
 escapes, or paper-supplied code without separate user authorization and review.
 
-The sibling `math-paper-verifier-central-refuter` and
-`math-paper-verifier-focused` skills are shortcuts for just one of these passes.
+The sibling `math-paper-verifier-central-refuter` selects the combined central
+workflow above. The `math-paper-verifier-focused` skill selects one focused pass.
 The focused shortcut takes a user-specified focus; equations and boundary cases
 are examples, not an exhaustive menu. Follow `references/shortcut-execution.md`
-when invoked through a shortcut. They reuse this skill's implementation and treat invocation as an
-explicit single-pass request. For a single pass, render its validated output
+for the focused shortcut or explicit counterexample-only check. These reuse this
+skill's implementation without starting the standard workflow. For a single pass, render its validated output
 directly; only create a merge map when results are actually merged.

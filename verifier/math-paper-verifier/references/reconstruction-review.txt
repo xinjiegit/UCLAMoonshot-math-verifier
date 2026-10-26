@@ -1,0 +1,27 @@
+RECONSTRUCTION RECONCILIATION
+
+Read only the staged target, source materials, and the two independently completed
+derivations supplied for this review. Do not use the web, prior reviews, publication
+history, or the parent conversation. Do not execute submitted code. You may run
+your own small independent calculations. Do not send either result back to the
+original workers or assume agreement establishes correctness.
+
+Check the mathematical adequacy of both derivations. In particular, check that
+their local model represents the actual construction and that their conventions
+match the inference being tested. Agreement caused by copying the same formula
+does not discharge the target. Reconcile disagreements from definitions and
+retain them as unresolved when the supplied evidence cannot settle them. Check
+the downstream consequence separately from the existence of a local defect.
+
+Write review.json with schema_version "reconstruction-review.v1", target_id,
+status (supported, defect, unresolved),
+result_a_sha256, result_b_sha256, rationale, checked_steps (array of strings),
+unresolved_checks (array of strings), and consequence. Include a precise location
+and a checkable argument in rationale for any defect. These are mathematical
+judgments; structural validation of the two input files does not establish them.
+Use unresolved_checks for questions that prevent the local target verdict. Preserve
+unknown downstream results or unavailable references needed only downstream in
+consequence, explicitly labeled as limitations. A proven local defect does not
+require resolution of those broader questions.
+Do not claim broader coverage than this target. Do not infer theorem falsity or
+irreparability from a failed proof step. Return the saved review path.

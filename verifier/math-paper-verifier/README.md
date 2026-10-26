@@ -36,6 +36,7 @@ math-paper-verifier/
     ├── run_codex.py                thin public launcher
     ├── run_claude_code.py          thin public launcher
     ├── run_native.py              CLI-free app-worker preparation/validation
+    ├── reconstruction.py          planner, paired derivations, review staging
     ├── codex_adapter.py            Codex process and event handling
     ├── claude_code_adapter.py      Claude Code process and event handling
     ├── audit_codex_run.py          Codex transcript gate
@@ -97,9 +98,9 @@ shortcuts require it alongside them.
 
 ## Focused shortcuts
 
-| Skill name | Shared pass selector |
+| Skill name | Workflow |
 | --- | --- |
-| `math-paper-verifier-central-refuter` | `refuter` |
+| `math-paper-verifier-central-refuter` | Original `refuter` plus paired calculation reconstruction |
 | `math-paper-verifier-focused` | `focused-sweep --focus "what to check"` |
 
 For example, use `$math-paper-verifier-focused paper.tex — check the equations
@@ -111,7 +112,25 @@ only the requested mathematical check, followed by shared validation, advisory r
 and JSON/Markdown reporting. They do not run the standard multi-pass review or
 fetch outside sources. Use `math-paper-verifier` for a full review or a custom
 combination of passes. See [shortcut execution](references/shortcut-execution.md)
-for the shared handoff procedure.
+for the focused and counterexample-only handoff procedure.
+
+Central refutation runs two independent components: the original manuscript-only
+refuter, and a fresh planner selecting critical calculations followed by two
+independent derivations per target and fresh mathematical reconciliation. The
+workers track definitions, conventions, the actual model, the calculation, and
+its downstream use; agreement with a citation alone does not close a target.
+The two components remain blind to each other's results until completion.
+Reports distinguish a counterexample to a theorem from a failed proof step and
+unresolved coverage. See
+[central refutation with reconstruction](references/central-reconstruction.md)
+and [reconstruction execution](references/reconstruction.md).
+
+Reconstruction requires native fresh subagents and may use explicitly supplied
+local references, with their hashes recorded. A CLI-only original refuter is not
+a completed combined check. Explicit **counterexample-only** requests and raw
+`--pass refuter` retain the original single-pass behavior. The ordinary full-paper
+workflow remains the four passes described above; this addition makes no claim
+of reliable error detection without repeated evaluation.
 
 The direct CLI aliases `display-sweep` and `boundary-clause-sweep` remain
 compatible presets of `focused-sweep`; they do not have separate skill folders.

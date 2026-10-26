@@ -2,14 +2,19 @@
 
 These sibling skills are thin entry points, not separate mathematical
 implementations. The shared skill, pass registry, prompts, and helpers remain
-authoritative. Read the shared `SKILL.md` and its required references. Interpret
-the shortcut as an explicit request for **only** its named mathematical pass;
-the standard global/decomposed/inventory/source workflow does not run unless
-the user also asks for it.
+authoritative. Read the shared `SKILL.md` and its required references. The
+standard global/decomposed/inventory/source workflow does not run unless the
+user also asks for it.
+
+The central-refuter shortcut normally runs the original refuter **plus paired
+calculation reconstruction**. Follow `central-reconstruction.md` for that
+workflow. The single-pass instructions below apply to the focused shortcut and
+an explicit **counterexample-only** request. Raw `--pass refuter` also retains
+its original single-pass behavior.
 
 | Shortcut | Shared selector | Focus |
 | --- | --- | --- |
-| `math-paper-verifier-central-refuter` | `refuter` | None |
+| `math-paper-verifier-central-refuter` with counterexample-only scope | `refuter` | None |
 | `math-paper-verifier-focused` | `focused-sweep` | User's specification via `--focus` |
 
 ## Inputs and scope

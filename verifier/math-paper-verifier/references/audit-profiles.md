@@ -39,6 +39,14 @@ global/decomposed union and report that external claims were not checked.
 Optional passes run in fresh contexts and retain distinct provenance. An
 explicit `only` request suppresses the standard workflow.
 
+The central-refuter skill combines that original `refuter` pass with paired
+reconstruction of critical calculations. Follow `central-reconstruction.md` for
+the planner, two independent derivations per target, and fresh mathematical
+reconciliation. Reconstruction is a separate native workflow, not a legacy pass
+selector. Explicit counterexample-only requests and raw `--pass refuter`
+invocations retain the original single pass. The standard workflow above is
+unchanged.
+
 ## Network boundary
 
 Mathematical passes and the obligation inventory are web-disabled. The

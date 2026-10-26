@@ -54,11 +54,11 @@ for direct CLI commands.
 ## Full review or a focused shortcut
 
 Use `math-paper-verifier` for the standard multi-pass review, or choose one
-shortcut for a single mathematical check:
+shortcut for a bounded mathematical check:
 
 | Skill name | Runs only |
 | --- | --- |
-| `math-paper-verifier-central-refuter` | A search for counterexamples to central claims |
+| `math-paper-verifier-central-refuter` | Counterexample search plus independent reconstruction of critical calculations |
 | `math-paper-verifier-focused` | A check of the mathematical aspect and scope you specify |
 
 Invoke with `$` in Codex or `/` in Claude Code, followed by the paper path:
@@ -67,6 +67,13 @@ Invoke with `$` in Codex or `/` in Claude Code, followed by the paper path:
 Codex:       $math-paper-verifier-central-refuter paper.pdf
 Claude Code: /math-paper-verifier-central-refuter paper.pdf
 ```
+
+Central refutation uses a fresh planner, two independent derivations per
+selected calculation, and a fresh mathematical reviewer alongside the original
+refuter. The reconstruction stage requires app-native fresh subagents. For only
+the original search, add “counterexample-only”; direct `--pass refuter` also
+retains that behavior. See
+[central refutation](math-paper-verifier/references/central-reconstruction.md).
 
 For a focused check, add what you want examined. For example, in Claude Code:
 
@@ -83,7 +90,8 @@ order in this paper.” If you omit the focus, the skill asks what to check.
 
 Each shortcut uses the shared validation, readable finding locations,
 advisory review, and JSON plus
-Markdown reports. These checks do not verify outside sources and are not a
+Markdown reports. Reconstruction may use explicitly supplied local references;
+these checks do not fetch outside sources and are not a
 complete paper review. Ask the main skill for multiple passes or other custom
 checks. Shortcuts require the sibling `math-paper-verifier` folder; if copying
 instead of linking, copy all three skill folders together.

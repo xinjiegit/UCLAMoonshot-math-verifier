@@ -54,12 +54,19 @@ For a narrower task, use one of the included shortcuts:
 | --- | --- |
 | `math-paper-verifier` | Full multi-pass paper verification |
 | `math-paper-verifier-focused` | Check the aspect and scope you specify, such as equations or boundary cases |
-| `math-paper-verifier-central-refuter` | Search for counterexamples to central claims |
+| `math-paper-verifier-central-refuter` | Search for counterexamples and independently reconstruct critical calculations |
 
 Invoke a shortcut with `$` in Codex or `/` in Claude Code, followed by the paper
 and, for a focused check, what to examine. See the
 [skill documentation](verifier/math-paper-verifier/README.md) for examples,
 execution details, report interpretation, and direct CLI commands.
+
+Central refutation combines the original counterexample search with a fresh
+planner, two independent derivations per selected calculation, and a fresh
+mathematical reviewer. It runs offline and requires native subagents; explicitly
+supplied local references may be used for reconstruction. Ask for
+**counterexample-only** to run just the original refuter. This targeted workflow
+does not replace the standard whole-paper and section-by-section passes.
 
 ## What's included
 

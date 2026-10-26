@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reconstruction-plan.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "reconstruction-plan.v1"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "selection_status": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "partial"
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "location": {
+            "type": "string",
+            "minLength": 1
+          },
+          "claim": {
+            "type": "string",
+            "minLength": 1
+          },
+          "prerequisites": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "minItems": 0
+          },
+          "downstream_use": {
+            "type": "string",
+            "minLength": 1
+          },
+          "selection_reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "target_id",
+          "location",
+          "claim",
+          "prerequisites",
+          "downstream_use",
+          "selection_reason"
+        ]
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "schema_version",
+    "scope",
+    "selection_status",
+    "limitations",
+    "targets"
+  ]
+}

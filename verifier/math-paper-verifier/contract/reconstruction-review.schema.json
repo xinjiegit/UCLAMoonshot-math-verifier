@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "reconstruction-review.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "target_id",
+    "status",
+    "result_a_sha256",
+    "result_b_sha256",
+    "rationale",
+    "checked_steps",
+    "unresolved_checks",
+    "consequence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "reconstruction-review.v1"
+    },
+    "target_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "supported",
+        "defect",
+        "unresolved"
+      ]
+    },
+    "result_a_sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "result_b_sha256": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rationale": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checked_steps": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "unresolved_checks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "consequence": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

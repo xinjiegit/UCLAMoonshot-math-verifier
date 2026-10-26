@@ -1,5 +1,11 @@
 # Merge protocol
 
+When reconstruction is included, also follow `reconstruction.md`: source
+agreement alone cannot close a calculation or its application. Merge only
+mathematically reconciled defects, distinguishing local proof failure from
+theorem falsity. Keep unresolved, unreviewed and unselected critical calculations
+visible as incomplete coverage, even if a legacy pass returns `accept`.
+
 Merge completed pass outputs only after validating each one.
 
 Keep each pass's advisory safeguard review separate from its mathematical

@@ -150,7 +150,7 @@ export default function InstallSwitcher() {
           whether a construction is well-defined, or another mathematical aspect.
           Equations and boundary cases are examples, not a fixed menu.
         </p>
-        <h3>Counterexamples to central claims</h3>
+        <h3>Central claims and their critical calculations</h3>
         <CommandBlock
           key={`refuter-${active}`}
           command={`${prefix}math-paper-verifier-central-refuter paper.pdf`}
@@ -158,6 +158,12 @@ export default function InstallSwitcher() {
           eventName="central-refuter-prompt-copy"
           eventData={{ provider: active }}
         />
+        <p>
+          Combines a counterexample search with two independent reconstructions
+          of each selected critical calculation and a fresh mathematical review.
+          This workflow requires native subagents. Add “counterexample-only” to
+          run just the original search.
+        </p>
         <p className="guide-note">
           These shortcuts use the same reporting and safeguards as the main skill,
           but do not perform a full paper review or verify outside sources.
