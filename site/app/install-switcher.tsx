@@ -159,10 +159,8 @@ export default function InstallSwitcher() {
           eventData={{ provider: active }}
         />
         <p>
-          Combines a counterexample search with two independent reconstructions
-          of each selected critical calculation and a fresh mathematical review.
-          This workflow requires native subagents. Add “counterexample-only” to
-          run just the original search.
+          Tests central claims and checks critical calculations. Requires native
+          subagents. Add “counterexample-only” to run just the counterexample search.
         </p>
         <p className="guide-note">
           These shortcuts use the same reporting and safeguards as the main skill,

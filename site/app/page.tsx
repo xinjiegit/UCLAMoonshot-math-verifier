@@ -520,6 +520,24 @@ export default function Home() {
           </aside>
         </div>
 
+        <aside className="paper-test" id="withdrawn-paper-test" aria-labelledby="paper-test-title">
+          <h3 id="paper-test-title">Offline test on OpenAI’s withdrawn paper</h3>
+          <p>
+            We tested the verifier on OpenAI’s withdrawn paper,{' '}
+            <a
+              href="https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/Algebraicity-of-Weil-classes-on-split-abelian-eightfolds-September-18-2026/paper.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Algebraicity of Weil classes on split abelian eightfolds
+            </a>, without web access. It identified the known sign error and an
+            additional local proof issue.
+          </p>
+          <p className="paper-test-scope">
+            The test focused on the affected argument and used a supplied local reference.
+          </p>
+        </aside>
+
         <div className="comparison evidence-comparison">
           <div className="comparison-intro">
             <h3 className="eyebrow">What does structured verification add?</h3>

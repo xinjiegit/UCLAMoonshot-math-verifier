@@ -190,6 +190,11 @@ h2 { margin-bottom: 0; font-size: clamp(2.15rem, 3.7vw, 3.65rem); line-height: 1
 .evidence-report-note { gap: 16px; padding: 22px 0; border-top: 1px solid var(--line-dark); }
 .evidence-report-note h3 { margin: 0; color: var(--forest); font-family: var(--serif); font-size: 1.5rem; font-weight: 600; }
 .evidence-report-note p { font-size: 1rem; }
+.paper-test { margin-top: 40px; padding: 28px; border-left: 3px solid var(--forest-bright); background: var(--paper-deep); }
+.paper-test h3 { margin: 0 0 12px; color: var(--forest); font-family: var(--serif); font-size: 24px; font-weight: 600; }
+.paper-test p { max-width: 900px; margin: 0; color: var(--ink-soft); font-size: 16px; line-height: 1.7; }
+.paper-test a { color: var(--forest); text-decoration: underline; text-underline-offset: 3px; }
+.paper-test .paper-test-scope { margin-top: 12px; font-size: 13px; }
 .evidence-comparison { margin-top: 88px; }
 .text-link { display: inline-flex; align-items: center; align-self: flex-start; gap: 9px; margin-top: 18px; padding-bottom: 3px; border-bottom: 1px solid var(--forest-bright); color: var(--forest-bright); font-size: 12px; font-weight: 700; }
 .text-link:hover { color: var(--forest); }
